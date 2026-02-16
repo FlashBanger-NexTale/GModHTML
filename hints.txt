@@ -1,0 +1,20 @@
+Welcome to the server! We hope you enjoy your stay.
+Press F1 to open the main menu and access server features.
+Use /help in chat to see all available commands.
+Remember to read the server rules before playing.
+Be respectful to other players and staff members.
+Report any bugs or issues to server administrators.
+Check out our Discord community for updates and events.
+Use /motd to view the message of the day.
+Press F4 to access your job menu and select your role.
+You can earn money by completing various activities.
+Visit the spawn area to find important locations.
+Don't break character while roleplaying!
+Use /advert before raiding or committing crimes.
+Check the scoreboard (TAB) to see online players.
+Voice chat can be toggled with the V key.
+Remember to save your progress regularly.
+New players receive a starter bonus - check your inventory!
+Join our VIP program for exclusive perks and benefits.
+Server restarts happen every 6 hours for maintenance.
+Use /pm [player] [message] to send private messages.

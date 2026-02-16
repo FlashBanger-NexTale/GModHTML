@@ -11,446 +11,292 @@
             box-sizing: border-box;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
-
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') no-repeat center center fixed;
-            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
             overflow: hidden;
-            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        body::before {
-            content: '';
-            position: absolute;
+        .background {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(2px);
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/></svg>');
+            background-size: cover;
+            z-index: -1;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 50px 20px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            width: 90%;
+            max-width: 1200px;
+            padding: 40px;
         }
 
         .header {
-            margin-bottom: 30px;
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .server-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 186, 255, 0.5);
-            border-radius: 4px;
-            font-size: 28px;
-            margin-right: 15px;
-            vertical-align: middle;
-        }
-
-        .server-title {
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .server-title h1 {
+        .server-name {
             font-size: 48px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
         }
 
-        .server-title p {
-            font-size: 18px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 1px;
-        }
-
-        .server-title p span {
-            color: #00baff;
-            font-weight: 600;
-        }
-
-        .tabs {
+        .server-info {
             display: flex;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 186, 255, 0.3);
-            border-bottom: 2px solid #00baff;
-            margin-bottom: 2px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.3);
-            border-right: 1px solid rgba(0, 186, 255, 0.2);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-
-        .tab:last-child {
-            border-right: none;
-        }
-
-        .tab:hover {
-            background: rgba(0, 186, 255, 0.1);
-        }
-
-        .tab.active {
-            background: rgba(0, 186, 255, 0.15);
-            border-bottom: 3px solid #00baff;
-        }
-
-        .content {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 186, 255, 0.3);
-            padding: 40px;
-            overflow-y: auto;
-            display: flex;
+            justify-content: center;
             gap: 30px;
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: flex;
-            width: 100%;
-            gap: 30px;
-        }
-
-        .column {
-            flex: 1;
-        }
-
-        .about-text {
-            font-size: 18px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .rules-list {
-            list-style: none;
-            font-size: 18px;
-            line-height: 2;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .rules-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0, 186, 255, 0.1);
-        }
-
-        .staff-member {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            margin-bottom: 15px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 186, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        .staff-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 4px;
-            margin-right: 15px;
-            border: 2px solid rgba(0, 186, 255, 0.3);
-            background: rgba(0, 186, 255, 0.1);
-        }
-
-        .staff-info {
-            flex: 1;
-        }
-
-        .staff-name {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .staff-rank {
-            font-size: 16px;
-            color: #00baff;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .info-panel {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .info-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
+            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         .info-item {
-            font-size: 22px;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 186, 255, 0.2);
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-label {
+            font-size: 12px;
+            opacity: 0.8;
+            text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .player-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .player-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .player-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .player-info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .loading-section {
+            margin-top: 40px;
+        }
+
+        .status-text {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
         .progress-container {
-            position: relative;
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(0, 186, 255, 0.3);
-            padding: 20px;
-        }
-
-        .progress-status {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.8);
-            letter-spacing: 1px;
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 8px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 186, 255, 0.3);
-            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 25px;
+            height: 40px;
             overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .progress-bar {
             height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00baff, #00ffff);
-            box-shadow: 0 0 10px rgba(0, 186, 255, 0.5);
+            background: linear-gradient(90deg, #00d4ff, #0099ff);
+            border-radius: 25px;
             transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
         }
 
-        .progress-text {
+        .file-info {
             text-align: center;
-            font-size: 16px;
+            margin-top: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .current-file {
             margin-top: 10px;
-            color: rgba(255, 255, 255, 0.6);
-            letter-spacing: 1px;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.7;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
         }
 
-        /* Scrollbar styling */
-        .content::-webkit-scrollbar {
-            width: 8px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        .content::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.3);
+        .loading-dots {
+            animation: pulse 1.5s infinite;
         }
 
-        .content::-webkit-scrollbar-thumb {
-            background: rgba(0, 186, 255, 0.5);
-            border-radius: 4px;
-        }
-
-        .content::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 186, 255, 0.7);
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
+    <div class="background"></div>
+    
     <div class="container">
         <div class="header">
-            <span class="server-icon">?</span>
-            <div class="server-title">
-                <h1>SERVER</h1>
-                <p>YOU ARE NOW JOINING <span id="serverName">LOADING...</span></p>
-            </div>
-        </div>
-
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab(0)">ABOUT_US</div>
-            <div class="tab" onclick="switchTab(1)">RULES</div>
-            <div class="tab" onclick="switchTab(2)">STAFF</div>
-            <div class="tab" onclick="switchTab(3)">INFO</div>
-        </div>
-
-        <div class="content">
-            <!-- ABOUT US -->
-            <div class="content-section active">
-                <div class="column">
-                    <div class="about-text">
-                        <p style="margin-bottom: 20px;">Welcome to our server! This is an example message which you can change.</p>
-                        <p style="margin-bottom: 20px;">We strive to provide the best gaming experience for all our players. Our community is built on respect, teamwork, and having fun together.</p>
-                        <p>Join our Discord server to stay updated with the latest news, events, and announcements!</p>
-                    </div>
+            <div class="server-name" id="serverName">Loading Server...</div>
+            <div class="server-info">
+                <div class="info-item">
+                    <div class="info-label">Gamemode</div>
+                    <div class="info-value" id="gamemode">-</div>
                 </div>
-            </div>
-
-            <!-- RULES -->
-            <div class="content-section">
-                <div class="column">
-                    <ul class="rules-list">
-                        <li>Don't be a minge.</li>
-                        <li>Follow rule #1.</li>
-                        <li>Follow rule #2.</li>
-                        <li>Respect all players and staff members.</li>
-                        <li>No RDM (Random Deathmatch).</li>
-                        <li>No prop abuse or prop killing.</li>
-                        <li>No mic spam or music in voice chat.</li>
-                        <li>Follow staff instructions at all times.</li>
-                    </ul>
+                <div class="info-item">
+                    <div class="info-label">Map</div>
+                    <div class="info-value" id="mapName">-</div>
                 </div>
-            </div>
-
-            <!-- STAFF -->
-            <div class="content-section">
-                <div class="column">
-                    <div class="staff-member">
-                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
-                        <div class="staff-info">
-                            <div class="staff-name">PONTIFEX - NOCLIP.GG</div>
-                            <div class="staff-rank">SUPERADMIN</div>
-                        </div>
-                    </div>
-                    <div class="staff-member">
-                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
-                        <div class="staff-info">
-                            <div class="staff-name">ACTIVE</div>
-                            <div class="staff-rank">SUPERADMIN</div>
-                        </div>
-                    </div>
-                    <div class="staff-member">
-                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
-                        <div class="staff-info">
-                            <div class="staff-name">MODERATOR</div>
-                            <div class="staff-rank">MODERATOR</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INFO -->
-            <div class="content-section">
-                <div class="column">
-                    <div class="info-panel">
-                        <div class="info-title" id="infoServerName">KINGS GAMING</div>
-                        <div class="info-item"><span id="maxPlayers">45</span> MAX PLAYERS</div>
-                        <div class="info-item" id="mapName">RP_DOWNTOWN_V4C_V2</div>
-                        <div class="info-item" id="gameMode">DARKRP</div>
-                    </div>
+                <div class="info-item">
+                    <div class="info-label">Players</div>
+                    <div class="info-value" id="maxPlayers">-</div>
                 </div>
             </div>
         </div>
 
-        <div class="progress-container">
-            <div class="progress-status" id="status">What the dog doin ?</div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar" id="progressBar"></div>
+        <div class="player-card">
+            <div class="player-title">Player Information</div>
+            <div class="player-info">
+                <div class="player-info-item">
+                    <div class="info-label">Steam ID</div>
+                    <div class="info-value" id="steamID">-</div>
+                </div>
+                <div class="player-info-item">
+                    <div class="info-label">Language</div>
+                    <div class="info-value" id="language">-</div>
+                </div>
             </div>
-            <div class="progress-text" id="progressText">Connecting...</div>
+        </div>
+
+        <div class="loading-section">
+            <div class="status-text">
+                <span id="statusText">Connecting to server</span>
+                <span class="loading-dots">...</span>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%;">
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+            
+            <div class="file-info">
+                <span id="filesDownloaded">0</span> / <span id="filesTotal">0</span> files downloaded
+            </div>
+            
+            <div class="current-file">
+                <span id="currentFile">Waiting for server...</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            Please wait while we load the server content
         </div>
     </div>
 
     <script>
-        let currentTab = 0;
+        // Global variables
         let totalFiles = 0;
         let filesNeeded = 0;
+        let filesDownloaded = 0;
 
-        function switchTab(index) {
-            const tabs = document.querySelectorAll('.tab');
-            const sections = document.querySelectorAll('.content-section');
-            
-            tabs.forEach(tab => tab.classList.remove('active'));
-            sections.forEach(section => section.classList.remove('active'));
-            
-            tabs[index].classList.add('active');
-            sections[index].classList.add('active');
-            
-            currentTab = index;
-        }
-
-        function updateProgress() {
-            if (totalFiles === 0) return;
-            const downloaded = totalFiles - filesNeeded;
-            const percentage = (downloaded / totalFiles) * 100;
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressText').innerText = 
-                `Downloaded ${downloaded} of ${totalFiles} files (${Math.round(percentage)}%)`;
-        }
-
-        // GMod Loading Screen Functions
+        // Called when game details are received
         function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
-            document.getElementById('serverName').innerText = servername.toUpperCase();
-            document.getElementById('infoServerName').innerText = servername.toUpperCase();
-            document.getElementById('mapName').innerText = mapname.toUpperCase();
-            document.getElementById('maxPlayers').innerText = maxplayers;
-            document.getElementById('gameMode').innerText = gamemode.toUpperCase();
+            document.getElementById('serverName').textContent = servername || 'Unknown Server';
+            document.getElementById('gamemode').textContent = gamemode || 'Unknown';
+            document.getElementById('mapName').textContent = mapname || 'Unknown';
+            document.getElementById('maxPlayers').textContent = maxplayers || '0';
+            document.getElementById('steamID').textContent = steamid || 'Unknown';
+            document.getElementById('language').textContent = language ? language.toUpperCase() : 'EN';
         }
 
+        // Called when total files count is set
         function SetFilesTotal(total) {
             totalFiles = total;
-            filesNeeded = total;
+            filesDownloaded = 0;
+            document.getElementById('filesTotal').textContent = total;
             updateProgress();
         }
 
+        // Called when a file starts downloading
+        function DownloadingFile(fileName) {
+            document.getElementById('currentFile').textContent = 'Downloading: ' + fileName;
+        }
+
+        // Called when download status changes
+        function SetStatusChanged(status) {
+            document.getElementById('statusText').textContent = status;
+        }
+
+        // Called when files needed changes
         function SetFilesNeeded(needed) {
             filesNeeded = needed;
+            filesDownloaded = totalFiles - needed;
+            document.getElementById('filesDownloaded').textContent = filesDownloaded;
             updateProgress();
         }
 
-        function DownloadingFile(fileName) {
-            document.getElementById('status').innerText = 'Downloading: ' + fileName.split('/').pop();
+        // Update progress bar
+        function updateProgress() {
+            if (totalFiles === 0) return;
+            
+            const percentage = Math.round((filesDownloaded / totalFiles) * 100);
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = percentage + '%';
         }
 
-        function SetStatusChanged(status) {
-            document.getElementById('status').innerText = status;
-        }
-
-        // Simulate loading for testing (remove in production)
-        if (typeof GetConVar === 'undefined') {
-            setTimeout(() => {
-                GameDetails('KINGS GAMING', '', 'rp_downtown_v4c_v2', 45, '76561198012345678', 'darkrp', 1, 'en');
-                SetFilesTotal(150);
-                
-                let filesLeft = 150;
-                const interval = setInterval(() => {
-                    if (filesLeft > 0) {
-                        filesLeft -= Math.floor(Math.random() * 5) + 1;
-                        if (filesLeft < 0) filesLeft = 0;
-                        SetFilesNeeded(filesLeft);
-                        DownloadingFile('materials/models/example_file_' + filesLeft + '.vtf');
-                    } else {
-                        clearInterval(interval);
-                        SetStatusChanged('Joining server...');
-                    }
-                }, 100);
-            }, 500);
-        }
+        // Initialize with some default values for testing
+        // (Remove these in production - they're just for preview)
+        // GameDetails('My Awesome GMod Server', 'http://example.com', 'gm_construct', '32', '76561198012345678', 'sandbox', 1, 'en');
+        // SetFilesTotal(100);
+        // SetFilesNeeded(75);
     </script>
 </body>
 </html>

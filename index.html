@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0e27;
             color: #fff;
             overflow: hidden;
             height: 100vh;
@@ -28,9 +28,56 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:1" /><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="800" fill="url(%23bg)"/></svg>');
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            z-index: -2;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             z-index: -1;
+        }
+
+        .background-image.active {
+            opacity: 0.4;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
         }
 
         .container {
@@ -45,10 +92,11 @@
         }
 
         .server-name {
-            font-size: 48px;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            font-size: 42px;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .server-info {
@@ -60,11 +108,11 @@
         }
 
         .info-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(15, 20, 40, 0.6);
             backdrop-filter: blur(10px);
             padding: 15px 25px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .info-label {
@@ -80,37 +128,7 @@
             margin-top: 5px;
         }
 
-        .player-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            margin: 30px auto;
-            max-width: 600px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .player-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .player-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .player-info-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            border-radius: 8px;
-        }
-
-        .loading-section {
+.loading-section {
             margin-top: 40px;
         }
 
@@ -122,25 +140,25 @@
         }
 
         .progress-container {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
             height: 40px;
             overflow: hidden;
             position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #00d4ff, #0099ff);
-            border-radius: 25px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            border-radius: 4px;
             transition: width 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+            font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            box-shadow: none;
         }
 
         .file-info {
@@ -174,10 +192,46 @@
             font-size: 14px;
             opacity: 0.7;
         }
+
+        .hint-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
+            width: 90%;
+            z-index: 100;
+        }
+
+        .hint-label {
+            font-size: 12px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .hint-text {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div class="background"></div>
+    <div class="background-image" id="backgroundImage"></div>
+    <div class="vignette"></div>
     
     <div class="container">
         <div class="header">
@@ -198,19 +252,7 @@
             </div>
         </div>
 
-        <div class="player-card">
-            <div class="player-title">Player Information</div>
-            <div class="player-info">
-                <div class="player-info-item">
-                    <div class="info-label">Steam ID</div>
-                    <div class="info-value" id="steamID">-</div>
-                </div>
-                <div class="player-info-item">
-                    <div class="info-label">Language</div>
-                    <div class="info-value" id="language">-</div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="loading-section">
             <div class="status-text">
@@ -232,17 +274,112 @@
                 <span id="currentFile">Waiting for server...</span>
             </div>
         </div>
+    </div>
 
-        <div class="footer">
-            Please wait while we load the server content
-        </div>
+    <div class="hint-container">
+        <div class="hint-label">Hint</div>
+        <div class="hint-text" id="hintText">Loading hints...</div>
     </div>
 
     <script>
+        // ===== CONFIGURATION =====
+        // Set these URLs to point to your resources
+        const BACKGROUND_URL = 'https://yourserver.com/backgrounds/background_';  // Will append index + .jpg
+        const HINTS_URL = 'https://yourserver.com/hints.txt';  // Text file with one hint per line
+        const NUM_BACKGROUNDS = 5;  // Number of background images (background_1.jpg to background_5.jpg)
+        const BACKGROUND_CHANGE_INTERVAL = 10000;  // Change background every 10 seconds
+        const HINT_CHANGE_INTERVAL = 8000;  // Change hint every 8 seconds
+
         // Global variables
         let totalFiles = 0;
         let filesNeeded = 0;
         let filesDownloaded = 0;
+        let hints = [];
+        let currentHintIndex = 0;
+        let currentBackgroundIndex = 0;
+
+        // Load hints from text file
+        async function loadHints() {
+            try {
+                const response = await fetch(HINTS_URL);
+                const text = await response.text();
+                hints = text.split('\n').filter(line => line.trim() !== '');
+                
+                if (hints.length > 0) {
+                    showNextHint();
+                    // Start hint rotation
+                    setInterval(showNextHint, HINT_CHANGE_INTERVAL);
+                }
+            } catch (error) {
+                console.error('Failed to load hints:', error);
+                hints = [
+                    'Welcome to the server!',
+                    'Press F1 to open the menu',
+                    'Use /help for a list of commands',
+                    'Be respectful to other players'
+                ];
+                showNextHint();
+                setInterval(showNextHint, HINT_CHANGE_INTERVAL);
+            }
+        }
+
+        // Show next hint with fade animation
+        function showNextHint() {
+            if (hints.length === 0) return;
+            
+            const hintElement = document.getElementById('hintText');
+            hintElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                hintElement.textContent = hints[currentHintIndex];
+                hintElement.style.animation = 'none';
+                setTimeout(() => {
+                    hintElement.style.animation = 'fadeIn 0.5s ease-in forwards';
+                }, 10);
+                
+                currentHintIndex = (currentHintIndex + 1) % hints.length;
+            }, 300);
+        }
+
+        // Change background image
+        function changeBackground() {
+            currentBackgroundIndex = (currentBackgroundIndex % NUM_BACKGROUNDS) + 1;
+            const imageUrl = BACKGROUND_URL + currentBackgroundIndex + '.jpg';
+            
+            const bgElement = document.getElementById('backgroundImage');
+            
+            // Fade out
+            bgElement.classList.remove('active');
+            
+            setTimeout(() => {
+                // Change image
+                bgElement.style.backgroundImage = `url('${imageUrl}')`;
+                
+                // Fade in
+                setTimeout(() => {
+                    bgElement.classList.add('active');
+                }, 50);
+            }, 1000);
+        }
+
+        // Initialize backgrounds
+        function initBackgrounds() {
+            // Set first background
+            const imageUrl = BACKGROUND_URL + '1.jpg';
+            const bgElement = document.getElementById('backgroundImage');
+            bgElement.style.backgroundImage = `url('${imageUrl}')`;
+            bgElement.classList.add('active');
+            currentBackgroundIndex = 1;
+            
+            // Start background rotation
+            setInterval(changeBackground, BACKGROUND_CHANGE_INTERVAL);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            initBackgrounds();
+            loadHints();
+        });
 
         // Called when game details are received
         function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
@@ -282,7 +419,14 @@
 
         // Update progress bar
         function updateProgress() {
-            if (totalFiles === 0) return;
+            if (totalFiles === 0) {
+                // If no files yet, show indeterminate state at 0%
+                const progressBar = document.getElementById('progressBar');
+                const progressText = document.getElementById('progressText');
+                progressBar.style.width = '0%';
+                progressText.textContent = '0%';
+                return;
+            }
             
             const percentage = Math.round((filesDownloaded / totalFiles) * 100);
             const progressBar = document.getElementById('progressBar');
@@ -290,13 +434,16 @@
             
             progressBar.style.width = percentage + '%';
             progressText.textContent = percentage + '%';
+            
+            // If we've downloaded everything, show completion message
+            if (filesDownloaded >= totalFiles && totalFiles > 0) {
+                document.getElementById('statusText').textContent = 'Loading complete';
+                document.getElementById('currentFile').textContent = 'Joining server...';
+            }
         }
 
-        // Initialize with some default values for testing
-        // (Remove these in production - they're just for preview)
-        // GameDetails('My Awesome GMod Server', 'http://example.com', 'gm_construct', '32', '76561198012345678', 'sandbox', 1, 'en');
-        // SetFilesTotal(100);
-        // SetFilesNeeded(75);
+        // Initialize
+        updateProgress();
     </script>
 </body>
 </html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="loading-container">
+        <!-- Background -->
+        <div class="background"></div>
+        
+        <!-- Main content -->
+        <div class="content">
+            <div class="logo">
+                <img src="logo.png" alt="Server Logo">
+            </div>
+            
+            <h1 class="server-name">YOUR SERVER NAME</h1>
+            
+            <div class="loading-info">
+                <p id="status">Connecting...</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress"></div>
+                </div>
+                <p id="percentage">0%</p>
+            </div>
+            
+            <div class="info-boxes">
+                <div class="info-box">
+                    <h3>Server Info</h3>
+                    <p id="serverName">Loading...</p>
+                    <p id="mapName">Map: Loading...</p>
+                    <p id="gamemode">Gamemode: Loading...</p>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Community Links</h3>
+                    <a href="https://discord.gg/yourserver" target="_blank">Discord</a>
+                    <a href="https://yourwebsite.com" target="_blank">Website</a>
+                    <a href="https://store.yourserver.com" target="_blank">Store</a>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Rules</h3>
+                    <ul>
+                        <li>No RDM</li>
+                        <li>Respect all players</li>
+                        <li>No exploiting</li>
+                        <li>Have fun!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

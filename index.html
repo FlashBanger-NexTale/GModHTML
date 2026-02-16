@@ -4,57 +4,453 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(2px);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .server-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 186, 255, 0.5);
+            border-radius: 4px;
+            font-size: 28px;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        .server-title {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .server-title h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .server-title p {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .server-title p span {
+            color: #00baff;
+            font-weight: 600;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 186, 255, 0.3);
+            border-bottom: 2px solid #00baff;
+            margin-bottom: 2px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(0, 186, 255, 0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab:hover {
+            background: rgba(0, 186, 255, 0.1);
+        }
+
+        .tab.active {
+            background: rgba(0, 186, 255, 0.15);
+            border-bottom: 3px solid #00baff;
+        }
+
+        .content {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 186, 255, 0.3);
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            gap: 30px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: flex;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .rules-list {
+            list-style: none;
+            font-size: 18px;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .rules-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 186, 255, 0.1);
+        }
+
+        .staff-member {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 186, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            margin-right: 15px;
+            border: 2px solid rgba(0, 186, 255, 0.3);
+            background: rgba(0, 186, 255, 0.1);
+        }
+
+        .staff-info {
+            flex: 1;
+        }
+
+        .staff-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .staff-rank {
+            font-size: 16px;
+            color: #00baff;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-panel {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .info-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .info-item {
+            font-size: 22px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 186, 255, 0.2);
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+
+        .progress-container {
+            position: relative;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 186, 255, 0.3);
+            padding: 20px;
+        }
+
+        .progress-status {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 186, 255, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00baff, #00ffff);
+            box-shadow: 0 0 10px rgba(0, 186, 255, 0.5);
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+        }
+
+        /* Scrollbar styling */
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(0, 186, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 186, 255, 0.7);
+        }
+    </style>
 </head>
 <body>
-    <div class="loading-container">
-        <!-- Background -->
-        <div class="background"></div>
-        
-        <!-- Main content -->
+    <div class="container">
+        <div class="header">
+            <span class="server-icon">?</span>
+            <div class="server-title">
+                <h1>SERVER</h1>
+                <p>YOU ARE NOW JOINING <span id="serverName">LOADING...</span></p>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab(0)">ABOUT_US</div>
+            <div class="tab" onclick="switchTab(1)">RULES</div>
+            <div class="tab" onclick="switchTab(2)">STAFF</div>
+            <div class="tab" onclick="switchTab(3)">INFO</div>
+        </div>
+
         <div class="content">
-            <div class="logo">
-                <img src="logo.png" alt="Server Logo">
+            <!-- ABOUT US -->
+            <div class="content-section active">
+                <div class="column">
+                    <div class="about-text">
+                        <p style="margin-bottom: 20px;">Welcome to our server! This is an example message which you can change.</p>
+                        <p style="margin-bottom: 20px;">We strive to provide the best gaming experience for all our players. Our community is built on respect, teamwork, and having fun together.</p>
+                        <p>Join our Discord server to stay updated with the latest news, events, and announcements!</p>
+                    </div>
+                </div>
             </div>
-            
-            <h1 class="server-name">YOUR SERVER NAME</h1>
-            
-            <div class="loading-info">
-                <p id="status">Connecting...</p>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress"></div>
-                </div>
-                <p id="percentage">0%</p>
-            </div>
-            
-            <div class="info-boxes">
-                <div class="info-box">
-                    <h3>Server Info</h3>
-                    <p id="serverName">Loading...</p>
-                    <p id="mapName">Map: Loading...</p>
-                    <p id="gamemode">Gamemode: Loading...</p>
-                </div>
-                
-                <div class="info-box">
-                    <h3>Community Links</h3>
-                    <a href="https://discord.gg/yourserver" target="_blank">Discord</a>
-                    <a href="https://yourwebsite.com" target="_blank">Website</a>
-                    <a href="https://store.yourserver.com" target="_blank">Store</a>
-                </div>
-                
-                <div class="info-box">
-                    <h3>Rules</h3>
-                    <ul>
-                        <li>No RDM</li>
-                        <li>Respect all players</li>
-                        <li>No exploiting</li>
-                        <li>Have fun!</li>
+
+            <!-- RULES -->
+            <div class="content-section">
+                <div class="column">
+                    <ul class="rules-list">
+                        <li>Don't be a minge.</li>
+                        <li>Follow rule #1.</li>
+                        <li>Follow rule #2.</li>
+                        <li>Respect all players and staff members.</li>
+                        <li>No RDM (Random Deathmatch).</li>
+                        <li>No prop abuse or prop killing.</li>
+                        <li>No mic spam or music in voice chat.</li>
+                        <li>Follow staff instructions at all times.</li>
                     </ul>
                 </div>
             </div>
+
+            <!-- STAFF -->
+            <div class="content-section">
+                <div class="column">
+                    <div class="staff-member">
+                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
+                        <div class="staff-info">
+                            <div class="staff-name">PONTIFEX - NOCLIP.GG</div>
+                            <div class="staff-rank">SUPERADMIN</div>
+                        </div>
+                    </div>
+                    <div class="staff-member">
+                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
+                        <div class="staff-info">
+                            <div class="staff-name">ACTIVE</div>
+                            <div class="staff-rank">SUPERADMIN</div>
+                        </div>
+                    </div>
+                    <div class="staff-member">
+                        <img class="staff-avatar" src="https://via.placeholder.com/60" alt="Staff">
+                        <div class="staff-info">
+                            <div class="staff-name">MODERATOR</div>
+                            <div class="staff-rank">MODERATOR</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFO -->
+            <div class="content-section">
+                <div class="column">
+                    <div class="info-panel">
+                        <div class="info-title" id="infoServerName">KINGS GAMING</div>
+                        <div class="info-item"><span id="maxPlayers">45</span> MAX PLAYERS</div>
+                        <div class="info-item" id="mapName">RP_DOWNTOWN_V4C_V2</div>
+                        <div class="info-item" id="gameMode">DARKRP</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-status" id="status">What the dog doin ?</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText">Connecting...</div>
         </div>
     </div>
-    
-    <script src="script.js"></script>
+
+    <script>
+        let currentTab = 0;
+        let totalFiles = 0;
+        let filesNeeded = 0;
+
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab');
+            const sections = document.querySelectorAll('.content-section');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            sections.forEach(section => section.classList.remove('active'));
+            
+            tabs[index].classList.add('active');
+            sections[index].classList.add('active');
+            
+            currentTab = index;
+        }
+
+        function updateProgress() {
+            if (totalFiles === 0) return;
+            const downloaded = totalFiles - filesNeeded;
+            const percentage = (downloaded / totalFiles) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').innerText = 
+                `Downloaded ${downloaded} of ${totalFiles} files (${Math.round(percentage)}%)`;
+        }
+
+        // GMod Loading Screen Functions
+        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
+            document.getElementById('serverName').innerText = servername.toUpperCase();
+            document.getElementById('infoServerName').innerText = servername.toUpperCase();
+            document.getElementById('mapName').innerText = mapname.toUpperCase();
+            document.getElementById('maxPlayers').innerText = maxplayers;
+            document.getElementById('gameMode').innerText = gamemode.toUpperCase();
+        }
+
+        function SetFilesTotal(total) {
+            totalFiles = total;
+            filesNeeded = total;
+            updateProgress();
+        }
+
+        function SetFilesNeeded(needed) {
+            filesNeeded = needed;
+            updateProgress();
+        }
+
+        function DownloadingFile(fileName) {
+            document.getElementById('status').innerText = 'Downloading: ' + fileName.split('/').pop();
+        }
+
+        function SetStatusChanged(status) {
+            document.getElementById('status').innerText = status;
+        }
+
+        // Simulate loading for testing (remove in production)
+        if (typeof GetConVar === 'undefined') {
+            setTimeout(() => {
+                GameDetails('KINGS GAMING', '', 'rp_downtown_v4c_v2', 45, '76561198012345678', 'darkrp', 1, 'en');
+                SetFilesTotal(150);
+                
+                let filesLeft = 150;
+                const interval = setInterval(() => {
+                    if (filesLeft > 0) {
+                        filesLeft -= Math.floor(Math.random() * 5) + 1;
+                        if (filesLeft < 0) filesLeft = 0;
+                        SetFilesNeeded(filesLeft);
+                        DownloadingFile('materials/models/example_file_' + filesLeft + '.vtf');
+                    } else {
+                        clearInterval(interval);
+                        SetStatusChanged('Joining server...');
+                    }
+                }, 100);
+            }, 500);
+        }
+    </script>
 </body>
 </html>

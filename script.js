@@ -61,16 +61,3 @@ setInterval(() => {
 }, 500);
 ```
 
-## Step 3: Enable GitHub Pages
-
-1. Go to your repository on GitHub
-2. Click **Settings** → **Pages**
-3. Under "Source", select **main** branch
-4. Click **Save**
-5. Your site will be available at: `https://yourusername.github.io/gmod-loading-screen/`
-
-## Step 4: Configure Your GMod Server
-
-Add this to your `server.cfg`:
-```
-sv_loadingurl "https://yourusername.github.io/gmod-loading-screen/"

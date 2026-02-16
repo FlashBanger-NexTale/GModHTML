@@ -17,9 +17,6 @@
             color: #fff;
             overflow: hidden;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .background {
@@ -47,7 +44,7 @@
         }
 
         .background-image.active {
-            opacity: 0.4;
+            opacity: 0.5;
         }
 
         .vignette {
@@ -56,171 +53,173 @@
             left: 0;
             width: 100%;
             height: 100%;
-            box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.8);
+            box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.9);
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
 
-        .background::before {
-            content: '';
+        /* Top Left - Map Icon with Shadow */
+        .map-container {
+            position: fixed;
+            top: 20px;
+            left: 34px;
+            width: 250px;
+            height: 250px;
+            background: rgba(180, 180, 180, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(8px 8px 20px rgba(0, 0, 0, 0.9));
+            z-index: 10;
+        }
+
+        .map-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .map-text {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: grid-move 20s linear infinite;
-        }
-
-        @keyframes grid-move {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            padding: 40px;
-        }
-
-        .header {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 50px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 1);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Top Left - Server Name and Gamemode */
+        .server-info-top {
+            position: fixed;
+            top: 20px;
+            left: 320px;
+            z-index: 10;
         }
 
         .server-name {
+            font-size: 52px;
+            font-weight: 700;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
+            letter-spacing: 3px;
+            margin-bottom: 0px;
+            line-height: 1.2;
+        }
+
+        .gamemode-text {
             font-size: 42px;
-            font-weight: 600;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            font-weight: 400;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
+            letter-spacing: 2px;
         }
 
-        .server-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        /* Top Right - Circular Loading Ring */
+        .loading-ring-container {
+            position: fixed;
+            top: 15px;
+            right: 40px;
+            z-index: 10;
         }
 
-        .info-item {
-            background: rgba(15, 20, 40, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 15px 25px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .loading-ring {
+            position: relative;
+            width: 180px;
+            height: 180px;
         }
 
-        .info-label {
-            font-size: 12px;
+        .loading-ring svg {
+            transform: rotate(-90deg);
+            width: 180px;
+            height: 180px;
+        }
+
+        .loading-ring circle {
+            fill: none;
+            stroke-width: 6;
+        }
+
+        .loading-ring .ring-background {
+            stroke: rgba(255, 255, 255, 0.15);
+        }
+
+        .loading-ring .ring-progress {
+            stroke: #ffffff;
+            stroke-dasharray: 534;
+            stroke-dashoffset: 534;
+            transition: stroke-dashoffset 0.5s ease;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+        }
+
+        .loading-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .loading-percentage {
+            font-size: 32px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
+        }
+
+        .loading-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             opacity: 0.8;
+            margin-top: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+        }
+
+        .loading-bar-text {
+            font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            opacity: 0.6;
+            margin-top: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
         }
 
-        .info-value {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-.loading-section {
-            margin-top: 40px;
-        }
-
-        .status-text {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .progress-container {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
-            height: 40px;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: none;
-        }
-
-        .file-info {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .current-file {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 12px;
-            opacity: 0.7;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .loading-dots {
-            animation: pulse 1.5s infinite;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 14px;
-            opacity: 0.7;
-        }
-
+        /* Bottom Left - Hint with Border */
         .hint-container {
             position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(15, 20, 40, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px 40px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 800px;
-            width: 90%;
-            z-index: 100;
+            bottom: 40px;
+            left: 40px;
+            max-width: 600px;
+            z-index: 10;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .hint-border {
+            width: 6px;
+            background: white;
+            margin-right: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .hint-content {
+            flex: 1;
         }
 
         .hint-label {
-            font-size: 12px;
-            opacity: 0.6;
-            text-transform: uppercase;
+            font-size: 32px;
+            font-weight: 400;
             letter-spacing: 2px;
             margin-bottom: 8px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 1);
         }
 
         .hint-text {
-            font-size: 16px;
-            line-height: 1.5;
+            font-size: 18px;
+            line-height: 1.6;
             opacity: 0;
             animation: fadeIn 0.5s ease-in forwards;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
         }
 
         @keyframes fadeIn {
@@ -233,62 +232,50 @@
     <div class="background-image" id="backgroundImage"></div>
     <div class="vignette"></div>
     
-    <div class="container">
-        <div class="header">
-            <div class="server-name" id="serverName">Loading Server...</div>
-            <div class="server-info">
-                <div class="info-item">
-                    <div class="info-label">Gamemode</div>
-                    <div class="info-value" id="gamemode">-</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Map</div>
-                    <div class="info-value" id="mapName">-</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Players</div>
-                    <div class="info-value" id="maxPlayers">-</div>
-                </div>
-            </div>
-        </div>
+    <!-- Map Icon (Top Left) -->
+    <div class="map-container">
+        <img class="map-icon" id="mapIcon" src="" alt="Map" style="display:none;">
+        <div class="map-text">MAP ICON<br>SHADOW ON THIS<br>IMAGE</div>
+    </div>
 
+    <!-- Server Name and Gamemode (Top Left, next to map) -->
+    <div class="server-info-top">
+        <div class="server-name" id="serverName">SERVER NAME</div>
+        <div class="gamemode-text" id="gamemode">GAMEMODE</div>
+    </div>
 
-
-        <div class="loading-section">
-            <div class="status-text">
-                <span id="statusText">Connecting to server</span>
-                <span class="loading-dots">...</span>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar" style="width: 0%;">
-                    <span id="progressText">0%</span>
-                </div>
-            </div>
-            
-            <div class="file-info">
-                <span id="filesDownloaded">0</span> / <span id="filesTotal">0</span> files downloaded
-            </div>
-            
-            <div class="current-file">
-                <span id="currentFile">Waiting for server...</span>
+    <!-- Circular Loading Ring (Top Right) -->
+    <div class="loading-ring-container">
+        <div class="loading-ring">
+            <svg>
+                <circle class="ring-background" cx="90" cy="90" r="85"></circle>
+                <circle class="ring-progress" id="ringProgress" cx="90" cy="90" r="85"></circle>
+            </svg>
+            <div class="loading-text">
+                <div class="loading-percentage" id="loadingPercentage">0%</div>
+                <div class="loading-label">LOADING</div>
+                <div class="loading-bar-text">BAR BUT RING</div>
             </div>
         </div>
     </div>
 
+    <!-- Hint (Bottom Left) -->
     <div class="hint-container">
-        <div class="hint-label">Hint</div>
-        <div class="hint-text" id="hintText">Loading hints...</div>
+        <div class="hint-border"></div>
+        <div class="hint-content">
+            <div class="hint-label">HINT</div>
+            <div class="hint-text" id="hintText">Loading hints...</div>
+        </div>
     </div>
 
     <script>
         // ===== CONFIGURATION =====
-        // Set these URLs to point to your resources
-        const BACKGROUND_URL = 'https://yourserver.com/backgrounds/background_';  // Will append index + .jpg
-        const HINTS_URL = 'https://github.com/FlashBanger-NexTale/GModHTML/blob/main/hints.txt';  // Text file with one hint per line
-        const NUM_BACKGROUNDS = 5;  // Number of background images (background_1.jpg to background_5.jpg)
-        const BACKGROUND_CHANGE_INTERVAL = 10000;  // Change background every 10 seconds
-        const HINT_CHANGE_INTERVAL = 8000;  // Change hint every 8 seconds
+        const BACKGROUND_URL = 'https://yourserver.com/backgrounds/background_';
+        const HINTS_URL = 'https://yourserver.com/hints.txt';
+        const MAP_ICON_URL = 'https://yourserver.com/mapicons/';  // Will append mapname + .jpg
+        const NUM_BACKGROUNDS = 5;
+        const BACKGROUND_CHANGE_INTERVAL = 10000;
+        const HINT_CHANGE_INTERVAL = 8000;
 
         // Global variables
         let totalFiles = 0;
@@ -306,8 +293,9 @@
                 hints = text.split('\n').filter(line => line.trim() !== '');
                 
                 if (hints.length > 0) {
+                    // Shuffle hints for random order
+                    hints = shuffleArray(hints);
                     showNextHint();
-                    // Start hint rotation
                     setInterval(showNextHint, HINT_CHANGE_INTERVAL);
                 }
             } catch (error) {
@@ -318,9 +306,20 @@
                     'Use /help for a list of commands',
                     'Be respectful to other players'
                 ];
+                hints = shuffleArray(hints);
                 showNextHint();
                 setInterval(showNextHint, HINT_CHANGE_INTERVAL);
             }
+        }
+
+        // Shuffle array randomly
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
         }
 
         // Show next hint with fade animation
@@ -341,10 +340,11 @@
             }, 300);
         }
 
-        // Change background image
+        // Change background image randomly
         function changeBackground() {
-            currentBackgroundIndex = (currentBackgroundIndex % NUM_BACKGROUNDS) + 1;
-            const imageUrl = BACKGROUND_URL + currentBackgroundIndex + '.jpg';
+            // Pick random background
+            const randomIndex = Math.floor(Math.random() * NUM_BACKGROUNDS) + 1;
+            const imageUrl = BACKGROUND_URL + randomIndex + '.jpg';
             
             const bgElement = document.getElementById('backgroundImage');
             
@@ -352,10 +352,7 @@
             bgElement.classList.remove('active');
             
             setTimeout(() => {
-                // Change image
                 bgElement.style.backgroundImage = `url('${imageUrl}')`;
-                
-                // Fade in
                 setTimeout(() => {
                     bgElement.classList.add('active');
                 }, 50);
@@ -364,86 +361,79 @@
 
         // Initialize backgrounds
         function initBackgrounds() {
-            // Set first background
-            const imageUrl = BACKGROUND_URL + '1.jpg';
+            // Set random first background
+            const randomIndex = Math.floor(Math.random() * NUM_BACKGROUNDS) + 1;
+            const imageUrl = BACKGROUND_URL + randomIndex + '.jpg';
             const bgElement = document.getElementById('backgroundImage');
             bgElement.style.backgroundImage = `url('${imageUrl}')`;
             bgElement.classList.add('active');
-            currentBackgroundIndex = 1;
             
             // Start background rotation
             setInterval(changeBackground, BACKGROUND_CHANGE_INTERVAL);
+        }
+
+        // Update circular progress ring
+        function updateProgressRing() {
+            const percentage = totalFiles === 0 ? 0 : Math.round((filesDownloaded / totalFiles) * 100);
+            const circumference = 534; // 2 * PI * 85
+            const offset = circumference - (percentage / 100) * circumference;
+            
+            document.getElementById('ringProgress').style.strokeDashoffset = offset;
+            document.getElementById('loadingPercentage').textContent = percentage + '%';
         }
 
         // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             initBackgrounds();
             loadHints();
+            updateProgressRing();
         });
 
         // Called when game details are received
         function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
-            document.getElementById('serverName').textContent = servername || 'Unknown Server';
-            document.getElementById('gamemode').textContent = gamemode || 'Unknown';
-            document.getElementById('mapName').textContent = mapname || 'Unknown';
-            document.getElementById('maxPlayers').textContent = maxplayers || '0';
-            document.getElementById('steamID').textContent = steamid || 'Unknown';
-            document.getElementById('language').textContent = language ? language.toUpperCase() : 'EN';
+            document.getElementById('serverName').textContent = servername || 'SERVER NAME';
+            document.getElementById('gamemode').textContent = gamemode || 'GAMEMODE';
+            
+            // Try to load map icon
+            if (mapname) {
+                const mapIcon = document.getElementById('mapIcon');
+                const mapText = document.querySelector('.map-text');
+                mapIcon.src = MAP_ICON_URL + mapname + '.jpg';
+                mapIcon.onload = function() {
+                    mapIcon.style.display = 'block';
+                    mapText.style.display = 'none';
+                };
+                mapIcon.onerror = function() {
+                    mapIcon.style.display = 'none';
+                    mapText.style.display = 'block';
+                    mapText.innerHTML = 'MAP ICON<br>SHADOW ON THIS<br>IMAGE<br><br>' + mapname;
+                };
+            }
         }
 
         // Called when total files count is set
         function SetFilesTotal(total) {
             totalFiles = total;
             filesDownloaded = 0;
-            document.getElementById('filesTotal').textContent = total;
-            updateProgress();
+            updateProgressRing();
         }
 
         // Called when a file starts downloading
         function DownloadingFile(fileName) {
-            document.getElementById('currentFile').textContent = 'Downloading: ' + fileName;
+            // Optional: show current file somewhere if needed
         }
 
         // Called when download status changes
         function SetStatusChanged(status) {
-            document.getElementById('statusText').textContent = status;
+            // Optional: show status somewhere if needed
         }
 
         // Called when files needed changes
         function SetFilesNeeded(needed) {
             filesNeeded = needed;
             filesDownloaded = totalFiles - needed;
-            document.getElementById('filesDownloaded').textContent = filesDownloaded;
-            updateProgress();
+            updateProgressRing();
         }
-
-        // Update progress bar
-        function updateProgress() {
-            if (totalFiles === 0) {
-                // If no files yet, show indeterminate state at 0%
-                const progressBar = document.getElementById('progressBar');
-                const progressText = document.getElementById('progressText');
-                progressBar.style.width = '0%';
-                progressText.textContent = '0%';
-                return;
-            }
-            
-            const percentage = Math.round((filesDownloaded / totalFiles) * 100);
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-            
-            progressBar.style.width = percentage + '%';
-            progressText.textContent = percentage + '%';
-            
-            // If we've downloaded everything, show completion message
-            if (filesDownloaded >= totalFiles && totalFiles > 0) {
-                document.getElementById('statusText').textContent = 'Loading complete';
-                document.getElementById('currentFile').textContent = 'Joining server...';
-            }
-        }
-
-        // Initialize
-        updateProgress();
     </script>
 </body>
 </html>

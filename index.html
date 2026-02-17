@@ -30,7 +30,6 @@
     user-select: none;
   }
 
-  /* ── BACKGROUNDS ── */
   .bg-slide {
     position: fixed; inset: 0; z-index: 0;
     background-size: cover;
@@ -50,7 +49,6 @@
     pointer-events: none;
   }
 
-  /* scanlines */
   #scanlines {
     position: fixed; inset: 0; z-index: 2;
     background: repeating-linear-gradient(
@@ -64,7 +62,6 @@
     0%,100%{opacity:1} 91%{opacity:1} 92%{opacity:.82} 93%{opacity:1} 97%{opacity:.9} 98%{opacity:1}
   }
 
-  /* ── TOP BAR ── */
   #topbar {
     position: fixed; top:0; left:0; right:0;
     height: 48px;
@@ -74,31 +71,25 @@
     padding: 0 20px; gap: 14px;
     z-index: 20;
   }
-
   #topbar-logo {
     width: 28px; height: 28px; flex-shrink: 0;
-    object-fit: contain;
-    opacity: 0.85;
+    object-fit: contain; opacity: 0.85;
   }
-
   #server-name-top {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 18px; letter-spacing: 2.5px;
     color: var(--white); flex: 1;
   }
-
   .top-badge {
     font-family: 'Share Tech Mono', monospace;
     font-size: 10px; letter-spacing: 1px;
-    color: var(--grey);
-    padding: 2px 0;
+    color: var(--grey); padding: 2px 0;
   }
   #gamemode-badge {
     color: var(--accent);
     border: 1px solid var(--blue-dim);
     padding: 2px 8px;
   }
-
   #music-btn {
     background: none;
     border: 1px solid var(--border);
@@ -110,15 +101,26 @@
   }
   #music-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ── CENTER ── */
+  /* THE FIX: proper centering in GMod's embedded browser */
   #center {
-    position: fixed; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    position: fixed;
+    top: 48px;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    display: table;
+    width: 100%;
     z-index: 10;
-    gap: 10px;
-    padding-top: 48px;
-    padding-bottom: 90px;
+  }
+  #center-inner {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+  }
+  #center-inner > * {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #main-logo {
@@ -129,7 +131,6 @@
     filter: drop-shadow(0 0 24px rgba(74,127,165,0.45))
             drop-shadow(0 0 8px rgba(74,127,165,0.3));
   }
-
   #main-title {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(40px, 6.5vw, 70px);
@@ -140,7 +141,6 @@
     text-shadow: 0 0 50px rgba(74,127,165,0.3);
     margin-top: 6px;
   }
-
   #main-subtitle {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 300; font-size: 12px;
@@ -148,23 +148,22 @@
     text-transform: uppercase;
     opacity: 0;
     animation: fadeUp 1.1s ease 0.6s forwards;
+    margin-top: 4px;
   }
-
   #player-count {
     font-family: 'Share Tech Mono', monospace;
     font-size: 10px; color: var(--blue);
     letter-spacing: 2px;
     opacity: 0;
     animation: fadeUp 1.1s ease 0.8s forwards;
-    margin-top: 6px;
+    margin-top: 10px;
   }
-
-  /* horizontal rule */
   .h-rule {
     width: 180px; height: 1px;
     background: linear-gradient(90deg, transparent, var(--border), transparent);
     opacity: 0;
     animation: fadeUp 1.1s ease 0.5s forwards;
+    margin-top: 8px; margin-bottom: 4px;
   }
 
   @keyframes fadeUp {
@@ -172,36 +171,37 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* ── BOTTOM BAR ── */
+  /* BOTTOM BAR — centered, shorter width */
   #bottombar {
-    position: fixed; bottom:0; left:0; right:0;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55%;
     background: rgba(5,8,12,0.93);
     border-top: 1px solid var(--border);
-    padding: 12px 24px 14px;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    padding: 10px 20px 12px;
     z-index: 20;
   }
-
   #progress-label {
     display: flex; justify-content: space-between; align-items: flex-end;
     margin-bottom: 7px;
   }
-
   #status-text {
     font-family: 'Share Tech Mono', monospace;
     font-size: 10px; color: var(--grey); letter-spacing: 1px;
   }
-
   #progress-pct {
     font-family: 'Share Tech Mono', monospace;
     font-size: 10px; color: var(--accent); letter-spacing: 1px;
   }
-
   #progress-track {
     width: 100%; height: 2px;
     background: rgba(255,255,255,0.06);
     position: relative; overflow: hidden;
   }
-
   #progress-fill {
     height: 100%; width: 0%;
     background: linear-gradient(90deg, var(--blue-dim), var(--accent));
@@ -215,7 +215,6 @@
     animation: shimmer 1.4s ease infinite;
   }
   @keyframes shimmer { 0%{opacity:0} 50%{opacity:1} 100%{opacity:0} }
-
   #file-info {
     font-family: 'Share Tech Mono', monospace;
     font-size: 9px; color: rgba(138,154,170,0.35);
@@ -223,7 +222,6 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
-  /* corner brackets */
   .bracket { position: fixed; width: 16px; height: 16px; z-index: 15; opacity: 0.25; }
   .bracket-tl { top:55px;  left:10px;  border-top:1px solid var(--grey-lt); border-left:1px solid var(--grey-lt); }
   .bracket-tr { top:55px;  right:10px; border-top:1px solid var(--grey-lt); border-right:1px solid var(--grey-lt); }
@@ -235,7 +233,6 @@
 </head>
 <body>
 
-<!-- Background slides -->
 <div class="bg-slide active" id="bg0" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340711838416987/2026-02-16_115025.png?ex=6995daf7&is=69948977&hm=3950cde05dcaa1bb02b90d7df19ec85fe19a3172ea9669b299ee181b4c2dddd4&=&format=webp&quality=lossless&width=1424&height=800')"></div>
 <div class="bg-slide"        id="bg1" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340711326843183/2026-02-16_114621.png?ex=6995daf6&is=69948976&hm=9d84444ff82c44ce41802966a3c67ad02b8a4371d435640a28a47aa90f5a9b2b&=&format=webp&quality=lossless&width=1424&height=800')"></div>
 <div class="bg-slide"        id="bg2" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340712325091328/2026-02-16_115405.png?ex=6995daf7&is=69948977&hm=e30f818efb041b10456ea9a8bf72a7863d2f193055d780df6bf6cba0466980cf&=&format=webp&quality=lossless&width=1424&height=800')"></div>
@@ -244,18 +241,15 @@
 <div id="bg-overlay"></div>
 <div id="scanlines"></div>
 
-<!-- Corner brackets -->
 <div class="bracket bracket-tl"></div>
 <div class="bracket bracket-tr"></div>
 <div class="bracket bracket-bl"></div>
 <div class="bracket bracket-br"></div>
 
-<!-- Audio — add your music URL to the src -->
 <audio id="audio" loop>
   <source src="" type="audio/mpeg">
 </audio>
 
-<!-- Top bar -->
 <div id="topbar">
   <img id="topbar-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="logo">
   <div id="server-name-top">LOADING...</div>
@@ -264,18 +258,16 @@
   <button id="music-btn" onclick="toggleMusic()">♪ MUSIC: ON</button>
 </div>
 
-<!-- Center content -->
 <div id="center">
-  <img id="main-logo"
-    src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920"
-    alt="SCP Logo">
-  <div id="main-title">SCP BREACH</div>
-  <div class="h-rule"></div>
-  <div id="main-subtitle">Special Containment Procedures Foundation</div>
-  <div id="player-count">CONNECTING...</div>
+  <div id="center-inner">
+    <img id="main-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="SCP Logo">
+    <div id="main-title">SCP BREACH</div>
+    <div class="h-rule"></div>
+    <div id="main-subtitle">Special Containment Procedures Foundation</div>
+    <div id="player-count">CONNECTING...</div>
+  </div>
 </div>
 
-<!-- Bottom bar -->
 <div id="bottombar">
   <div id="progress-label">
     <span id="status-text">INITIALIZING SECURE CONNECTION...</span>
@@ -287,11 +279,9 @@
   <div id="file-info">—</div>
 </div>
 
-<!-- Background slideshow -->
 <script>
   var slides = document.querySelectorAll('.bg-slide');
   var bgIndex = 0;
-
   setInterval(function() {
     slides[bgIndex].classList.remove('active');
     bgIndex = (bgIndex + 1) % slides.length;
@@ -299,7 +289,6 @@
   }, 8000);
 </script>
 
-<!-- Music -->
 <script>
   var audio = document.getElementById('audio');
   var musicOn = true;
@@ -326,7 +315,6 @@
   tryPlay();
 </script>
 
-<!-- GMod Loading Screen API -->
 <script>
   var _totalFiles = 0;
   var _neededFiles = 0;
@@ -341,10 +329,9 @@
 
   window.GameDetails = function(serverName, serverURL, mapName, maxPlayers, steamID, gamemode, volume, language) {
     document.getElementById('server-name-top').textContent = serverName || 'SCP BREACH';
-    document.getElementById('map-badge').textContent       = 'MAP: ' + (mapName   ? mapName.toUpperCase()   : '—');
-    document.getElementById('gamemode-badge').textContent  = gamemode  ? gamemode.toUpperCase()              : '—';
+    document.getElementById('map-badge').textContent       = 'MAP: ' + (mapName  ? mapName.toUpperCase()  : '—');
+    document.getElementById('gamemode-badge').textContent  = gamemode ? gamemode.toUpperCase()             : '—';
     document.getElementById('player-count').textContent    = 'MAX PLAYERS: ' + (maxPlayers || '—');
-
     if (typeof volume === 'number') audio.volume = Math.min(1, volume * 0.6);
     tryPlay();
   };
@@ -365,8 +352,7 @@
   };
 
   window.SetStatusChanged = function(status) {
-    var s = status ? status.toUpperCase() : 'INITIALIZING...';
-    document.getElementById('status-text').textContent = s;
+    document.getElementById('status-text').textContent = status ? status.toUpperCase() : 'INITIALIZING...';
     if (status && (status.toLowerCase().includes('done') || status.toLowerCase().includes('ready') || status.toLowerCase().includes('complete'))) {
       document.getElementById('progress-fill').style.width = '100%';
       document.getElementById('progress-pct').textContent  = '100%';

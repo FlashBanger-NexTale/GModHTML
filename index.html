@@ -1,439 +1,497 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading...</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loading...</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap');
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0e27;
-            color: #fff;
-            overflow: hidden;
-            height: 100vh;
-        }
+  :root {
+    --red: #c0392b;
+    --red-dim: #7a1f1f;
+    --amber: #e67e22;
+    --white: #e8e4dc;
+    --grey: #a0998a;
+    --dark: #080808;
+    --panel: rgba(10,10,10,0.82);
+    --border: rgba(200,190,170,0.12);
+  }
 
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-            z-index: -2;
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .background-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            z-index: -1;
-        }
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
 
-        .background-image.active {
-            opacity: 0.5;
-        }
+  /* ── BACKGROUND ── */
+  #bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1.8s ease;
+    filter: brightness(0.28) saturate(0.6);
+  }
 
-        .vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.9);
-            pointer-events: none;
-            z-index: 1;
-        }
+  #bg-overlay {
+    position: fixed; inset: 0; z-index: 1;
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(120,20,10,0.25) 0%, transparent 65%),
+      linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%),
+      linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 40%);
+    pointer-events: none;
+  }
 
-        /* Top Left - Map Icon with Shadow */
-        .map-container {
-            position: fixed;
-            top: 20px;
-            left: 34px;
-            width: 250px;
-            height: 250px;
-            background: rgba(180, 180, 180, 0.95);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            filter: drop-shadow(8px 8px 20px rgba(0, 0, 0, 0.9));
-            z-index: 10;
-        }
+  /* scanlines */
+  #scanlines {
+    position: fixed; inset: 0; z-index: 2;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    animation: flicker 8s infinite;
+  }
+  @keyframes flicker {
+    0%,100% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.85; }
+    94% { opacity: 1; }
+    97% { opacity: 0.9; }
+    98% { opacity: 1; }
+  }
 
-        .map-icon {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+  /* ── LAYOUT ── */
+  #ui {
+    position: fixed; inset: 0; z-index: 10;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 0;
+  }
 
-        .map-text {
-            position: absolute;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 1);
-            padding: 20px;
-            line-height: 1.6;
-        }
+  /* ── TOP BAR ── */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(6,6,6,0.9);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+    z-index: 20;
+  }
 
-        /* Top Left - Server Name and Gamemode */
-        .server-info-top {
-            position: fixed;
-            top: 20px;
-            left: 320px;
-            z-index: 10;
-        }
+  #scp-logo {
+    width: 32px; height: 32px; flex-shrink: 0;
+  }
 
-        .server-name {
-            font-size: 52px;
-            font-weight: 700;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
-            letter-spacing: 3px;
-            margin-bottom: 0px;
-            line-height: 1.2;
-        }
+  #server-name-top {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: var(--white);
+    flex: 1;
+  }
 
-        .gamemode-text {
-            font-size: 42px;
-            font-weight: 400;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 1);
-            letter-spacing: 2px;
-        }
+  #gamemode-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    border: 1px solid var(--red-dim);
+    padding: 3px 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
 
-        /* Top Right - Circular Loading Ring */
-        .loading-ring-container {
-            position: fixed;
-            top: 15px;
-            right: 40px;
-            z-index: 10;
-        }
+  #map-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--grey);
+    letter-spacing: 1px;
+  }
 
-        .loading-ring {
-            position: relative;
-            width: 180px;
-            height: 180px;
-        }
+  /* ── MUSIC CONTROL ── */
+  #music-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--grey);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  #music-btn:hover { border-color: var(--white); color: var(--white); }
 
-        .loading-ring svg {
-            transform: rotate(-90deg);
-            width: 180px;
-            height: 180px;
-        }
+  /* ── CENTER LOGO ── */
+  #center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 12px;
+    margin-top: 52px;
+    margin-bottom: 110px;
+  }
 
-        .loading-ring circle {
-            fill: none;
-            stroke-width: 6;
-        }
+  #main-logo {
+    width: 110px; height: 110px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.3s forwards;
+    filter: drop-shadow(0 0 20px rgba(192,57,43,0.4));
+  }
 
-        .loading-ring .ring-background {
-            stroke: rgba(255, 255, 255, 0.15);
-        }
+  #main-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 7vw, 72px);
+    letter-spacing: 8px;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.5s forwards;
+    text-shadow: 0 0 40px rgba(192,57,43,0.3);
+  }
 
-        .loading-ring .ring-progress {
-            stroke: #ffffff;
-            stroke-dasharray: 534;
-            stroke-dashoffset: 534;
-            transition: stroke-dashoffset 0.5s ease;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
-        }
+  #main-subtitle {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 5px;
+    color: var(--grey);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.7s forwards;
+  }
 
-        .loading-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
+  #player-count {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.9s forwards;
+    margin-top: 4px;
+  }
 
-        .loading-percentage {
-            font-size: 32px;
-            font-weight: 700;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 1);
-        }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-        .loading-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.8;
-            margin-top: 5px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-        }
+  /* ── BOTTOM BAR ── */
+  #bottombar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(6,6,6,0.92);
+    border-top: 1px solid var(--border);
+    padding: 14px 28px 16px;
+    z-index: 20;
+  }
 
-        .loading-bar-text {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.6;
-            margin-top: 2px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
-        }
+  #progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 8px;
+  }
 
-        /* Bottom Left - Hint with Border */
-        .hint-container {
-            position: fixed;
-            bottom: 40px;
-            left: 40px;
-            max-width: 600px;
-            z-index: 10;
-            display: flex;
-            align-items: stretch;
-        }
+  #status-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--grey);
+    letter-spacing: 1px;
+  }
 
-        .hint-border {
-            width: 6px;
-            background: white;
-            margin-right: 20px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
+  #progress-pct {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 1px;
+  }
 
-        .hint-content {
-            flex: 1;
-        }
+  #progress-track {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.07);
+    position: relative;
+    overflow: hidden;
+  }
 
-        .hint-label {
-            font-size: 32px;
-            font-weight: 400;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-shadow: 3px 3px 8px rgba(0, 0, 0, 1);
-        }
+  #progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red-dim), var(--red));
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px var(--red);
+    position: relative;
+  }
 
-        .hint-text {
-            font-size: 18px;
-            line-height: 1.6;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-in forwards;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
-        }
+  #progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 40px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4));
+    animation: shimmer 1.2s ease infinite;
+  }
+  @keyframes shimmer {
+    0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; }
+  }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-    </style>
+  #file-info {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: rgba(160,153,138,0.4);
+    letter-spacing: 1px;
+    margin-top: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%;
+  }
+
+  /* corner brackets */
+  .bracket-tl, .bracket-tr, .bracket-bl, .bracket-br {
+    position: fixed; width: 20px; height: 20px; z-index: 15;
+    opacity: 0.3;
+  }
+  .bracket-tl { top: 60px; left: 12px; border-top: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .bracket-tr { top: 60px; right: 12px; border-top: 1px solid var(--white); border-right: 1px solid var(--white); }
+  .bracket-bl { bottom: 100px; left: 12px; border-bottom: 1px solid var(--white); border-left: 1px solid var(--white); }
+  .bracket-br { bottom: 100px; right: 12px; border-bottom: 1px solid var(--white); border-right: 1px solid var(--white); }
+
+  /* ── HIDDEN AUDIO ── */
+  #audio { display: none; }
+</style>
 </head>
 <body>
-    <div class="background"></div>
-    <div class="background-image" id="backgroundImage"></div>
-    <div class="vignette"></div>
-    
-    <!-- Map Icon (Top Left) -->
-    <div class="map-container">
-        <img class="map-icon" id="mapIcon" src="" alt="Map" style="display:none;">
-        <div class="map-text">MAP ICON<br>SHADOW ON THIS<br>IMAGE</div>
+
+<!-- Background image -->
+<div id="bg"></div>
+<div id="bg-overlay"></div>
+<div id="scanlines"></div>
+
+<!-- Corner brackets -->
+<div class="bracket-tl"></div>
+<div class="bracket-tr"></div>
+<div class="bracket-bl"></div>
+<div class="bracket-br"></div>
+
+<!-- Audio -->
+<audio id="audio" loop>
+  <!--
+    PUT YOUR MUSIC URL HERE.
+    Example: <source src="https://yourserver.com/music/ambient.mp3" type="audio/mpeg">
+    Multiple sources for fallback:
+    <source src="music.ogg" type="audio/ogg">
+    <source src="music.mp3" type="audio/mpeg">
+  -->
+  <source src="" type="audio/mpeg">
+</audio>
+
+<!-- UI -->
+<div id="ui">
+
+  <!-- Top bar -->
+  <div id="topbar">
+    <!-- SCP Logo SVG (the classic arrow symbol) -->
+    <svg id="scp-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="46" stroke="#c0392b" stroke-width="2" fill="none"/>
+      <circle cx="50" cy="50" r="32" stroke="#c0392b" stroke-width="1.5" fill="none"/>
+      <circle cx="50" cy="50" r="6" fill="#c0392b"/>
+      <line x1="50" y1="4" x2="50" y2="18" stroke="#c0392b" stroke-width="2"/>
+      <line x1="83" y1="66" x2="70" y2="59" stroke="#c0392b" stroke-width="2"/>
+      <line x1="17" y1="66" x2="30" y2="59" stroke="#c0392b" stroke-width="2"/>
+      <!-- Arrow pointing right on middle ring -->
+      <path d="M82 50 L96 50 M90 44 L96 50 L90 56" stroke="#c0392b" stroke-width="1.5" fill="none"/>
+    </svg>
+
+    <div id="server-name-top">LOADING...</div>
+    <div id="map-badge">MAP: —</div>
+    <div id="gamemode-badge">—</div>
+    <button id="music-btn" onclick="toggleMusic()">♪ MUSIC: ON</button>
+  </div>
+
+  <!-- Center -->
+  <div id="center">
+    <!-- SCP Foundation big logo -->
+    <svg id="main-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="94" stroke="#c0392b" stroke-width="3" fill="none"/>
+      <circle cx="100" cy="100" r="66" stroke="#c0392b" stroke-width="2" fill="none"/>
+      <circle cx="100" cy="100" r="12" fill="#c0392b"/>
+      <!-- Three arrows -->
+      <line x1="100" y1="6" x2="100" y2="34" stroke="#c0392b" stroke-width="3"/>
+      <path d="M100 6 L93 18 M100 6 L107 18" stroke="#c0392b" stroke-width="2" fill="none"/>
+      <line x1="168" y1="131" x2="143" y2="117" stroke="#c0392b" stroke-width="3"/>
+      <path d="M168 131 L155 126 M168 131 L161 119" stroke="#c0392b" stroke-width="2" fill="none"/>
+      <line x1="32" y1="131" x2="57" y2="117" stroke="#c0392b" stroke-width="3"/>
+      <path d="M32 131 L45 126 M32 131 L39 119" stroke="#c0392b" stroke-width="2" fill="none"/>
+    </svg>
+
+    <div id="main-title">SCP BREACH</div>
+    <div id="main-subtitle">Special Containment Procedures Foundation</div>
+    <div id="player-count">CONNECTING...</div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div id="bottombar">
+    <div id="progress-label">
+      <span id="status-text">INITIALIZING SECURE CONNECTION...</span>
+      <span id="progress-pct">0%</span>
     </div>
-
-    <!-- Server Name and Gamemode (Top Left, next to map) -->
-    <div class="server-info-top">
-        <div class="server-name" id="serverName">SERVER NAME</div>
-        <div class="gamemode-text" id="gamemode">GAMEMODE</div>
+    <div id="progress-track">
+      <div id="progress-fill"></div>
     </div>
+    <div id="file-info">—</div>
+  </div>
 
-    <!-- Circular Loading Ring (Top Right) -->
-    <div class="loading-ring-container">
-        <div class="loading-ring">
-            <svg>
-                <circle class="ring-background" cx="90" cy="90" r="85"></circle>
-                <circle class="ring-progress" id="ringProgress" cx="90" cy="90" r="85"></circle>
-            </svg>
-            <div class="loading-text">
-                <div class="loading-percentage" id="loadingPercentage">0%</div>
-                <div class="loading-label">LOADING</div>
-                <div class="loading-bar-text">BAR BUT RING</div>
-            </div>
-        </div>
-    </div>
+</div>
 
-    <!-- Hint (Bottom Left) -->
-    <div class="hint-container">
-        <div class="hint-border"></div>
-        <div class="hint-content">
-            <div class="hint-label">HINT</div>
-            <div class="hint-text" id="hintText">Loading hints...</div>
-        </div>
-    </div>
+<!-- Background slideshow images — edit these URLs -->
+<script>
+  var BG_IMAGES = [
+    // Add your background image URLs here, e.g.:
+    // "https://yourserver.com/img/bg1.jpg",
+    // "https://yourserver.com/img/bg2.jpg",
+    // Falls back to a dark solid if empty
+    "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1920&q=60",
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=60",
+    "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=60"
+  ];
 
-    <script>
-        // ===== CONFIGURATION =====
-        const BACKGROUND_URL = 'https://yourserver.com/backgrounds/background_';
-        const HINTS_URL = 'https://yourserver.com/hints.txt';
-        const MAP_ICON_URL = 'https://yourserver.com/mapicons/';  // Will append mapname + .jpg
-        const NUM_BACKGROUNDS = 5;
-        const BACKGROUND_CHANGE_INTERVAL = 10000;
-        const HINT_CHANGE_INTERVAL = 8000;
+  var bgEl = document.getElementById('bg');
+  var bgIndex = 0;
 
-        // Global variables
-        let totalFiles = 0;
-        let filesNeeded = 0;
-        let filesDownloaded = 0;
-        let hints = [];
-        let currentHintIndex = 0;
-        let currentBackgroundIndex = 0;
+  function nextBackground() {
+    if (BG_IMAGES.length === 0) return;
+    bgEl.style.backgroundImage = 'url(' + BG_IMAGES[bgIndex] + ')';
+    bgIndex = (bgIndex + 1) % BG_IMAGES.length;
+  }
 
-        // Load hints from text file
-        async function loadHints() {
-            try {
-                const response = await fetch(HINTS_URL);
-                const text = await response.text();
-                hints = text.split('\n').filter(line => line.trim() !== '');
-                
-                if (hints.length > 0) {
-                    // Shuffle hints for random order
-                    hints = shuffleArray(hints);
-                    showNextHint();
-                    setInterval(showNextHint, HINT_CHANGE_INTERVAL);
-                }
-            } catch (error) {
-                console.error('Failed to load hints:', error);
-                hints = [
-                    'Welcome to the server!',
-                    'Press F1 to open the menu',
-                    'Use /help for a list of commands',
-                    'Be respectful to other players'
-                ];
-                hints = shuffleArray(hints);
-                showNextHint();
-                setInterval(showNextHint, HINT_CHANGE_INTERVAL);
-            }
-        }
+  nextBackground();
+  setInterval(function() {
+    bgEl.style.opacity = '0';
+    setTimeout(function() {
+      nextBackground();
+      bgEl.style.opacity = '1';
+    }, 900);
+  }, 8000);
+  bgEl.style.opacity = '1';
+</script>
 
-        // Shuffle array randomly
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
+<!-- Music -->
+<script>
+  var audio = document.getElementById('audio');
+  var musicOn = true;
 
-        // Show next hint with fade animation
-        function showNextHint() {
-            if (hints.length === 0) return;
-            
-            const hintElement = document.getElementById('hintText');
-            hintElement.style.opacity = '0';
-            
-            setTimeout(() => {
-                hintElement.textContent = hints[currentHintIndex];
-                hintElement.style.animation = 'none';
-                setTimeout(() => {
-                    hintElement.style.animation = 'fadeIn 0.5s ease-in forwards';
-                }, 10);
-                
-                currentHintIndex = (currentHintIndex + 1) % hints.length;
-            }, 300);
-        }
+  // Autoplay with user interaction fallback
+  function tryPlay() {
+    var src = audio.querySelector('source') ? audio.querySelector('source').src : '';
+    if (!src) return; // no music configured
+    audio.volume = 0.35;
+    audio.play().catch(function() {
+      // Autoplay blocked — play on first click
+      document.addEventListener('click', function once() {
+        audio.play();
+        document.removeEventListener('click', once);
+      });
+    });
+  }
 
-        // Change background image randomly
-        function changeBackground() {
-            // Pick random background
-            const randomIndex = Math.floor(Math.random() * NUM_BACKGROUNDS) + 1;
-            const imageUrl = BACKGROUND_URL + randomIndex + '.jpg';
-            
-            const bgElement = document.getElementById('backgroundImage');
-            
-            // Fade out
-            bgElement.classList.remove('active');
-            
-            setTimeout(() => {
-                bgElement.style.backgroundImage = `url('${imageUrl}')`;
-                setTimeout(() => {
-                    bgElement.classList.add('active');
-                }, 50);
-            }, 1000);
-        }
+  function toggleMusic() {
+    var btn = document.getElementById('music-btn');
+    if (musicOn) {
+      audio.pause();
+      btn.textContent = '♪ MUSIC: OFF';
+    } else {
+      audio.play();
+      btn.textContent = '♪ MUSIC: ON';
+    }
+    musicOn = !musicOn;
+  }
 
-        // Initialize backgrounds
-        function initBackgrounds() {
-            // Set random first background
-            const randomIndex = Math.floor(Math.random() * NUM_BACKGROUNDS) + 1;
-            const imageUrl = BACKGROUND_URL + randomIndex + '.jpg';
-            const bgElement = document.getElementById('backgroundImage');
-            bgElement.style.backgroundImage = `url('${imageUrl}')`;
-            bgElement.classList.add('active');
-            
-            // Start background rotation
-            setInterval(changeBackground, BACKGROUND_CHANGE_INTERVAL);
-        }
+  // Respect the game's music volume setting
+  window._gameVolume = 1;
 
-        // Update circular progress ring
-        function updateProgressRing() {
-            const percentage = totalFiles === 0 ? 0 : Math.round((filesDownloaded / totalFiles) * 100);
-            const circumference = 534; // 2 * PI * 85
-            const offset = circumference - (percentage / 100) * circumference;
-            
-            document.getElementById('ringProgress').style.strokeDashoffset = offset;
-            document.getElementById('loadingPercentage').textContent = percentage + '%';
-        }
+  tryPlay();
+</script>
 
-        // Initialize on load
-        window.addEventListener('DOMContentLoaded', () => {
-            initBackgrounds();
-            loadHints();
-            updateProgressRing();
-        });
+<!-- GMod Loading Screen API -->
+<script>
+  var _totalFiles = 0;
+  var _neededFiles = 0;
+  var _currentFile = '';
 
-        // Called when game details are received
-        function GameDetails(servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language) {
-            document.getElementById('serverName').textContent = servername || 'SERVER NAME';
-            document.getElementById('gamemode').textContent = gamemode || 'GAMEMODE';
-            
-            // Try to load map icon
-            if (mapname) {
-                const mapIcon = document.getElementById('mapIcon');
-                const mapText = document.querySelector('.map-text');
-                mapIcon.src = MAP_ICON_URL + mapname + '.jpg';
-                mapIcon.onload = function() {
-                    mapIcon.style.display = 'block';
-                    mapText.style.display = 'none';
-                };
-                mapIcon.onerror = function() {
-                    mapIcon.style.display = 'none';
-                    mapText.style.display = 'block';
-                    mapText.innerHTML = 'MAP ICON<br>SHADOW ON THIS<br>IMAGE<br><br>' + mapname;
-                };
-            }
-        }
+  function updateProgress() {
+    var pct = 0;
+    if (_totalFiles > 0) {
+      pct = Math.round(((_totalFiles - _neededFiles) / _totalFiles) * 100);
+    }
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
 
-        // Called when total files count is set
-        function SetFilesTotal(total) {
-            totalFiles = total;
-            filesDownloaded = 0;
-            updateProgressRing();
-        }
+  // Called when loading starts — receives all server details
+  window.GameDetails = function(serverName, serverURL, mapName, maxPlayers, steamID, gamemode, volume, language) {
+    // Server name in top bar
+    document.getElementById('server-name-top').textContent = serverName || 'SCP BREACH';
 
-        // Called when a file starts downloading
-        function DownloadingFile(fileName) {
-            // Optional: show current file somewhere if needed
-        }
+    // Update main title if server name contains something interesting
+    // document.getElementById('main-title').textContent = serverName;
 
-        // Called when download status changes
-        function SetStatusChanged(status) {
-            // Optional: show status somewhere if needed
-        }
+    // Map
+    document.getElementById('map-badge').textContent = 'MAP: ' + (mapName ? mapName.toUpperCase() : '—');
 
-        // Called when files needed changes
-        function SetFilesNeeded(needed) {
-            filesNeeded = needed;
-            filesDownloaded = totalFiles - needed;
-            updateProgressRing();
-        }
-    </script>
+    // Gamemode
+    document.getElementById('gamemode-badge').textContent = gamemode ? gamemode.toUpperCase() : '—';
+
+    // Players
+    document.getElementById('player-count').textContent = 'MAX PLAYERS: ' + (maxPlayers || '—');
+
+    // Music volume from game settings
+    if (typeof volume === 'number' && audio) {
+      audio.volume = Math.max(0, Math.min(1, volume * 0.6));
+    }
+
+    tryPlay();
+  };
+
+  window.SetFilesTotal = function(total) {
+    _totalFiles = total;
+    _neededFiles = total;
+    updateProgress();
+  };
+
+  window.SetFilesNeeded = function(needed) {
+    _neededFiles = needed;
+    updateProgress();
+  };
+
+  window.DownloadingFile = function(fileName) {
+    _currentFile = fileName;
+    document.getElementById('file-info').textContent = fileName || '—';
+  };
+
+  window.SetStatusChanged = function(status) {
+    document.getElementById('status-text').textContent = status
+      ? status.toUpperCase()
+      : 'INITIALIZING...';
+
+    // When fully connected, push to 100%
+    if (status && (status.toLowerCase().includes('done') || status.toLowerCase().includes('ready'))) {
+      document.getElementById('progress-fill').style.width = '100%';
+      document.getElementById('progress-pct').textContent = '100%';
+    }
+  };
+</script>
+
 </body>
 </html>

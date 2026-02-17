@@ -248,10 +248,10 @@
 
 <div id="topbar">
   <img id="topbar-logo" src="https://i.ibb.co/4n16yy21/2026-02-17-170243734.png" alt="logo">
-  <div id="server-name-top">LOADING...</div>
-  <div class="top-badge" id="map-badge">MAP: —</div>
+  <div id="server-name-top">ЗАГРУЗКА...</div>
+  <div class="top-badge" id="map-badge">КАРТА: —</div>
   <div class="top-badge" id="gamemode-badge">—</div>
-  <button id="music-btn" onclick="toggleMusic()">♪ MUSIC: ON</button>
+  <button id="music-btn" onclick="toggleMusic()">♪ МУЗЫКА: ON</button>
 </div>
 
 <div id="center">
@@ -259,14 +259,14 @@
     <img id="main-logo" src="https://i.ibb.co/4n16yy21/2026-02-17-170243734.png" alt="SCP Logo">
     <div id="main-title">SCP BREACH</div>
     <div class="h-rule"></div>
-    <div id="main-subtitle">Special Containment Procedures Foundation</div>
-    <div id="player-count">CONNECTING...</div>
+    <div id="main-subtitle">Special Containment Procedures | Фонд</div>
+    <div id="player-count">ПОДКЛЮЧЕНИЕ...</div>
   </div>
 </div>
 
 <div id="bottombar">
   <div id="progress-label">
-    <span id="status-text">INITIALIZING SECURE CONNECTION...</span>
+    <span id="status-text">УСТАНОВКА БЕЗОПАСНОГО ПУТЯ...</span>
     <span id="progress-pct">0%</span>
   </div>
   <div id="progress-track">
@@ -304,8 +304,8 @@
   function toggleMusic() {
     var btn = document.getElementById('music-btn');
     musicOn = !musicOn;
-    if (musicOn) { audio.play(); btn.textContent = '♪ MUSIC: ON'; }
-    else         { audio.pause(); btn.textContent = '♪ MUSIC: OFF'; }
+    if (musicOn) { audio.play(); btn.textContent = '♪ МУЗЫКА: ON'; }
+    else         { audio.pause(); btn.textContent = '♪ МУЗЫКА: OFF'; }
   }
 
   tryPlay();
@@ -324,8 +324,8 @@
   }
 
   window.GameDetails = function(serverName, serverURL, mapName, maxPlayers, steamID, gamemode, volume, language) {
-    document.getElementById('server-name-top').textContent = serverName || 'SCP BREACH';
-    document.getElementById('map-badge').textContent       = 'MAP: ' + (mapName  ? mapName.toUpperCase()  : '—');
+    document.getElementById('server-name-top').textContent = serverName || 'ATLAS | BREACH';
+    document.getElementById('map-badge').textContent       = 'КАРТА: ' + (mapName  ? mapName.toUpperCase()  : '—');
     document.getElementById('gamemode-badge').textContent  = gamemode ? gamemode.toUpperCase()             : '—';
 
     // GameDetails doesn't provide current player count — fetch it via server query if needed
@@ -366,7 +366,7 @@
   };
 
   window.SetStatusChanged = function(status) {
-    document.getElementById('status-text').textContent = status ? status.toUpperCase() : 'INITIALIZING...';
+    document.getElementById('status-text').textContent = status ? status.toUpperCase() : 'ЗАГРУЗКА...';
     if (status && (status.toLowerCase().includes('done') || status.toLowerCase().includes('ready') || status.toLowerCase().includes('complete'))) {
       document.getElementById('progress-fill').style.width = '100%';
       document.getElementById('progress-pct').textContent  = '100%';

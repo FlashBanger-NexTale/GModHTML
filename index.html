@@ -328,7 +328,25 @@
     document.getElementById('server-name-top').textContent = serverName || 'SCP BREACH';
     document.getElementById('map-badge').textContent       = 'MAP: ' + (mapName  ? mapName.toUpperCase()  : '—');
     document.getElementById('gamemode-badge').textContent  = gamemode ? gamemode.toUpperCase()             : '—';
-    document.getElementById('player-count').textContent    = 'MAX PLAYERS: ' + (maxPlayers || '—');
+
+    // GameDetails doesn't provide current player count — fetch it via server query if needed
+    // For now shows: —/32
+    document.getElementById('player-count').textContent = '— / ' + (maxPlayers || '—');
+
+    // Fetch live player count from Steam server info
+    // Replace YOUR_SERVER_IP and YOUR_SERVER_PORT with your actual server details
+    var serverIP   = 'YOUR_SERVER_IP';
+    var serverPort = 'YOUR_SERVER_PORT';
+    fetch('https://api.steampowered.com/ISteamApps/GetServersAtAddress/v0001/?addr=' + serverIP + ':' + serverPort + '&format=json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.response && data.response.servers && data.response.servers[0]) {
+          var s = data.response.servers[0];
+          document.getElementById('player-count').textContent = (s.players || '—') + ' / ' + (maxPlayers || '—');
+        }
+      })
+      .catch(function() { /* silently fail, keep showing —/max */ });
+
     if (typeof volume === 'number') audio.volume = Math.min(1, volume * 0.6);
     tryPlay();
   };

@@ -104,23 +104,22 @@
   /* THE FIX: proper centering in GMod's embedded browser */
   #center {
     position: fixed;
-    top: 48px;
+    top: 0;
     left: 0;
     right: 0;
-    bottom: 60px;
-    display: table;
-    width: 100%;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 10;
+    gap: 10px;
   }
   #center-inner {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-  }
-  #center-inner > * {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   #main-logo {
@@ -171,16 +170,14 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* BOTTOM BAR — centered, shorter width */
+  /* BOTTOM BAR */
   #bottombar {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 55%;
+    left: 0;
+    width: 70%;
     background: rgba(5,8,12,0.93);
     border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
     border-right: 1px solid var(--border);
     padding: 10px 20px 12px;
     z-index: 20;
@@ -233,10 +230,10 @@
 </head>
 <body>
 
-<div class="bg-slide active" id="bg0" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340711838416987/2026-02-16_115025.png?ex=6995daf7&is=69948977&hm=3950cde05dcaa1bb02b90d7df19ec85fe19a3172ea9669b299ee181b4c2dddd4&=&format=webp&quality=lossless&width=1424&height=800')"></div>
-<div class="bg-slide"        id="bg1" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340711326843183/2026-02-16_114621.png?ex=6995daf6&is=69948976&hm=9d84444ff82c44ce41802966a3c67ad02b8a4371d435640a28a47aa90f5a9b2b&=&format=webp&quality=lossless&width=1424&height=800')"></div>
-<div class="bg-slide"        id="bg2" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340712325091328/2026-02-16_115405.png?ex=6995daf7&is=69948977&hm=e30f818efb041b10456ea9a8bf72a7863d2f193055d780df6bf6cba0466980cf&=&format=webp&quality=lossless&width=1424&height=800')"></div>
-<div class="bg-slide"        id="bg3" style="background-image:url('https://media.discordapp.net/attachments/1368589284373958876/1473340710840307734/2026-02-16_115438.png?ex=6995daf6&is=69948976&hm=57aa3e61bdbd2af13d9c0818ba10baea337ae1847957cee0c92e7969d1322577&=&format=webp&quality=lossless&width=1424&height=800')"></div>
+<div class="bg-slide active" id="bg0" style="background-image:url('img/bg1.png')"></div>
+<div class="bg-slide"        id="bg1" style="background-image:url('img/bg2.png')"></div>
+<div class="bg-slide"        id="bg2" style="background-image:url('img/bg3.png')"></div>
+<div class="bg-slide"        id="bg3" style="background-image:url('img/bg4.png')"></div>
 
 <div id="bg-overlay"></div>
 <div id="scanlines"></div>
@@ -251,7 +248,7 @@
 </audio>
 
 <div id="topbar">
-  <img id="topbar-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="logo">
+  <img id="topbar-logo" src="img/logo.png" alt="logo">
   <div id="server-name-top">LOADING...</div>
   <div class="top-badge" id="map-badge">MAP: —</div>
   <div class="top-badge" id="gamemode-badge">—</div>
@@ -260,7 +257,7 @@
 
 <div id="center">
   <div id="center-inner">
-    <img id="main-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="SCP Logo">
+    <img id="main-logo" src="img/logo.png" alt="SCP Logo">
     <div id="main-title">SCP BREACH</div>
     <div class="h-rule"></div>
     <div id="main-subtitle">Special Containment Procedures Foundation</div>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loading...</title>
+<title>Загрузка...</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Rajdhani:wght@300;400;600;700&display=swap');
 
@@ -14,7 +14,6 @@
     --grey-lt: #b8c4cc;
     --white:   #dce4e8;
     --dark:    #07090b;
-    --panel:   rgba(8,12,16,0.88);
     --border:  rgba(100,140,170,0.18);
     --accent:  #5b9ec9;
   }
@@ -31,9 +30,11 @@
   }
 
   .bg-slide {
-    position: fixed; inset: 0; z-index: 0;
-    background-size: cover;
-    background-position: center;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
     opacity: 0;
     transition: opacity 1.6s ease;
     filter: brightness(0.32) saturate(0.55) hue-rotate(10deg);
@@ -44,8 +45,8 @@
     position: fixed; inset: 0; z-index: 1;
     background:
       radial-gradient(ellipse at 50% 80%, rgba(30,60,90,0.35) 0%, transparent 60%),
-      linear-gradient(to top,  rgba(0,0,0,0.92) 0%,  transparent 50%),
-      linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 35%);
+      linear-gradient(to top,    rgba(0,0,0,0.92) 0%, transparent 50%),
+      linear-gradient(to bottom, rgba(0,0,0,0.7)  0%, transparent 35%);
     pointer-events: none;
   }
 
@@ -76,8 +77,8 @@
     object-fit: contain; opacity: 0.85;
   }
   #server-name-top {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px; letter-spacing: 2.5px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px; letter-spacing: 3px;
     color: var(--white); flex: 1;
   }
   .top-badge {
@@ -98,16 +99,13 @@
     font-size: 10px; letter-spacing: 1px;
     padding: 3px 10px; cursor: pointer;
     transition: all 0.2s;
+    -webkit-appearance: none;
   }
   #music-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* THE FIX: proper centering in GMod's embedded browser */
   #center {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -170,11 +168,9 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* BOTTOM BAR */
   #bottombar {
     position: fixed;
-    bottom: 0;
-    left: 0;
+    bottom: 0; left: 0;
     width: 75%;
     background: rgba(5,8,12,0.93);
     border-top: 1px solid var(--border);
@@ -182,7 +178,7 @@
     z-index: 20;
   }
   #progress-label {
-    display: flex; justify-content: space-between; align-items: flex-end;
+    display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 7px;
   }
   #status-text {
@@ -229,10 +225,10 @@
 </head>
 <body>
 
-<div class="bg-slide active" id="bg0" style="background-image:url('https://i.ibb.co/Fvn9V8J/2026-02-16-114621.png')"></div>
-<div class="bg-slide"        id="bg1" style="background-image:url('https://i.ibb.co/zh4B6Nr8/2026-02-16-115025.png')"></div>
-<div class="bg-slide"        id="bg2" style="background-image:url('https://i.ibb.co/60F4VB4Q/2026-02-16-115405.png')"></div>
-<div class="bg-slide"        id="bg3" style="background-image:url('https://i.ibb.co/C5Hmd31z/2026-02-16-115438.png')"></div>
+<img class="bg-slide active" id="bg0" src="https://i.ibb.co/Fvn9V8J/2026-02-16-114621.png">
+<img class="bg-slide"        id="bg1" src="https://i.ibb.co/zh4B6Nr8/2026-02-16-115025.png">
+<img class="bg-slide"        id="bg2" src="https://i.ibb.co/60F4VB4Q/2026-02-16-115405.png">
+<img class="bg-slide"        id="bg3" src="https://i.ibb.co/C5Hmd31z/2026-02-16-115438.png">
 
 <div id="bg-overlay"></div>
 <div id="scanlines"></div>
@@ -247,26 +243,26 @@
 </audio>
 
 <div id="topbar">
-  <img id="topbar-logo" src="https://i.ibb.co/4n16yy21/2026-02-17-170243734.png" alt="logo">
+  <img id="topbar-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="logo">
   <div id="server-name-top">ЗАГРУЗКА...</div>
   <div class="top-badge" id="map-badge">КАРТА: —</div>
   <div class="top-badge" id="gamemode-badge">—</div>
-  <button id="music-btn" onclick="toggleMusic()">♪ МУЗЫКА: ON</button>
+  <button id="music-btn">♪ МУЗЫКА: ВКЛ</button>
 </div>
 
 <div id="center">
   <div id="center-inner">
-    <img id="main-logo" src="https://i.ibb.co/4n16yy21/2026-02-17-170243734.png" alt="SCP Logo">
-    <div id="main-title">SCP BREACH</div>
+    <img id="main-logo" src="https://media.discordapp.net/attachments/1368589284373958876/1473340486029803672/2026-02-17_162718770.png?ex=6995dac1&is=69948941&hm=1a655e46339d7cfc48fe416f78dcf075a85f4a498620790426dbc03c8601abcf&=&format=webp&quality=lossless&width=920&height=920" alt="SCP Logo">
+    <div id="main-title">ATLAS BREACH</div>
     <div class="h-rule"></div>
-    <div id="main-subtitle">Special Containment Procedures | Фонд</div>
+    <div id="main-subtitle">Special Containment Procedures Foundation</div>
     <div id="player-count">ПОДКЛЮЧЕНИЕ...</div>
   </div>
 </div>
 
 <div id="bottombar">
   <div id="progress-label">
-    <span id="status-text">УСТАНОВКА БЕЗОПАСНОГО ПУТЯ...</span>
+    <span id="status-text">ИНИЦИАЛИЗАЦИЯ БЕЗОПАСНОГО СОЕДИНЕНИЯ...</span>
     <span id="progress-pct">0%</span>
   </div>
   <div id="progress-track">
@@ -276,6 +272,7 @@
 </div>
 
 <script>
+  // Background slideshow
   var slides = document.querySelectorAll('.bg-slide');
   var bgIndex = 0;
   setInterval(function() {
@@ -283,35 +280,34 @@
     bgIndex = (bgIndex + 1) % slides.length;
     slides[bgIndex].classList.add('active');
   }, 8000);
-</script>
 
-<script>
+  // Music — addEventListener instead of onclick (GMod blocks inline handlers)
   var audio = document.getElementById('audio');
   var musicOn = true;
 
   function tryPlay() {
-    var src = audio.querySelector('source').getAttribute('src');
+    var source = audio.querySelector('source');
+    if (!source) return;
+    var src = source.getAttribute('src');
     if (!src) return;
     audio.volume = 0.35;
-    audio.play().catch(function() {
-      document.addEventListener('click', function once() {
-        audio.play();
-        document.removeEventListener('click', once);
-      });
-    });
+    audio.play();
   }
 
-  function toggleMusic() {
-    var btn = document.getElementById('music-btn');
+  document.getElementById('music-btn').addEventListener('click', function() {
     musicOn = !musicOn;
-    if (musicOn) { audio.play(); btn.textContent = '♪ МУЗЫКА: ON'; }
-    else         { audio.pause(); btn.textContent = '♪ МУЗЫКА: OFF'; }
-  }
+    if (musicOn) {
+      audio.play();
+      this.textContent = '♪ МУЗЫКА: ВКЛ';
+    } else {
+      audio.pause();
+      this.textContent = '♪ МУЗЫКА: ВЫКЛ';
+    }
+  });
 
   tryPlay();
-</script>
 
-<script>
+  // GMod Loading Screen API
   var _totalFiles = 0;
   var _neededFiles = 0;
 
@@ -324,28 +320,10 @@
   }
 
   window.GameDetails = function(serverName, serverURL, mapName, maxPlayers, steamID, gamemode, volume, language) {
-    document.getElementById('server-name-top').textContent = serverName || 'ATLAS | BREACH';
+    document.getElementById('server-name-top').textContent = serverName || 'SCP BREACH';
     document.getElementById('map-badge').textContent       = 'КАРТА: ' + (mapName  ? mapName.toUpperCase()  : '—');
-    document.getElementById('gamemode-badge').textContent  = gamemode ? gamemode.toUpperCase()             : '—';
-
-    // GameDetails doesn't provide current player count — fetch it via server query if needed
-    // For now shows: —/32
-    document.getElementById('player-count').textContent = '— / ' + (maxPlayers || '—');
-
-    // Fetch live player count from Steam server info
-    // Replace YOUR_SERVER_IP and YOUR_SERVER_PORT with your actual server details
-    var serverIP   = 'YOUR_SERVER_IP';
-    var serverPort = 'YOUR_SERVER_PORT';
-    fetch('https://api.steampowered.com/ISteamApps/GetServersAtAddress/v0001/?addr=' + serverIP + ':' + serverPort + '&format=json')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.response && data.response.servers && data.response.servers[0]) {
-          var s = data.response.servers[0];
-          document.getElementById('player-count').textContent = (s.players || '—') + ' / ' + (maxPlayers || '—');
-        }
-      })
-      .catch(function() { /* silently fail, keep showing —/max */ });
-
+    document.getElementById('gamemode-badge').textContent  = gamemode ? gamemode.toUpperCase() : '—';
+    document.getElementById('player-count').textContent   = '— / ' + (maxPlayers || '—');
     if (typeof volume === 'number') audio.volume = Math.min(1, volume * 0.6);
     tryPlay();
   };
@@ -366,8 +344,8 @@
   };
 
   window.SetStatusChanged = function(status) {
-    document.getElementById('status-text').textContent = status ? status.toUpperCase() : 'ЗАГРУЗКА...';
-    if (status && (status.toLowerCase().includes('done') || status.toLowerCase().includes('ready') || status.toLowerCase().includes('complete'))) {
+    document.getElementById('status-text').textContent = status ? status.toUpperCase() : 'ИНИЦИАЛИЗАЦИЯ...';
+    if (status && (status.toLowerCase().indexOf('done') >= 0 || status.toLowerCase().indexOf('ready') >= 0 || status.toLowerCase().indexOf('complete') >= 0)) {
       document.getElementById('progress-fill').style.width = '100%';
       document.getElementById('progress-pct').textContent  = '100%';
     }
